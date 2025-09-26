@@ -16,3 +16,31 @@
 @import url('./badges.css');
 @import url('./back-link.css');
 @import url('./footer.css');
+
+
+.page-container {
+  max-width: 1440px;
+  max-height: 696px;
+  margin: 0;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  gap: 24px;
+  max-width: 1440px;
+  justify-content: center;
+  align-items: center;
+  margin: 24px 0px;
+
+}
+
+
+.gallery-image {
+  display: block;
+  width: 360px;
+  height: 200px;
+
+}
