@@ -1,2 +1,2 @@
-import"./assets/modulepreload-polyfill-B5Qt9EMX.js";/* empty css                      */console.log("welcomerwWQ");
+import"./assets/modulepreload-polyfill-B5Qt9EMX.js";/* empty css                      */const t="feedback-msg",a=document.querySelector(".feedback-form"),l=a.querySelector("textarea");l.addEventListener("input",r);function r(e){const o=e.target.value;localStorage.setItem(t,o)}function n(){const e=localStorage.getItem(t);e&&(l.value=e)}n();a.addEventListener("submit",s);function s(e){e.preventDefault(),(l.value.trim()===""||a.email.value.trim()==="")&&alert("Fill please all fields"),console.log("Відправлення форми"),e.target.reset(),localStorage.removeItem(t)}
 //# sourceMappingURL=2-form.js.map
