@@ -1,46 +1,47 @@
-const STORAGE_KEY = "feedback-msg"; // будещее название ключа для localStorage
-
 const form = document.querySelector(".feedback-form")
+const STORAGE_KEY = "feedback-form-state"       // ключ где будет хранится значение
 
-const textarea = form.querySelector("textarea") // находим textarea
-
-textarea.addEventListener("input", hendlerInput);
+const formData = { email: "", message: "" }  // держит текущее значение  email, message
 
 
-function hendlerInput(event) {
-    const message = event.target.value; // получаем данние что ввел пользователь в инпут
 
-    localStorage.setItem(STORAGE_KEY, message) // добавляем в localStorage ключ(STORAGE_KEY) и значение(message)
+// Восстанавливаем данные из localStorage
+
+
+const localValue = localStorage.getItem(STORAGE_KEY)
+
+if (localValue) {
+    const parsedData  = JSON.parse(localValue)
+    formData.email = parsedData.email || "";
+    formData.message = parsedData.message || "";
+    form.elements.email.value = formData.email;
+    form.elements.message.value = formData.message;
 
 }
- 
 
-function populateTextArea() {
-    const message = localStorage.getItem(STORAGE_KEY)  // получаем значение из localStorge по ключу  STORAGE_KEY
+// сохраняем данные при вводе
+form.addEventListener("input", event => {
+    const { name, value } = event.target;  //const name = event.target.name; || const value = event.target.value;
 
-    if (message) {
-        textarea.value = message;    // окно ввода (textarea.value) принимает значение STORAGE_KEY
-    }
-}
+    formData[name] = value.trim(); 
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData)); // 15
+})
 
-populateTextArea() // вызываем функцию что бы отобразить инпут
+// Обработка сабмита
 
+form.addEventListener("submit", event => {
+    event.preventDefault();
 
-
-// делаем так что после нажатия Submit окно очищалось
-
-
-form.addEventListener("submit", handleSubmit) // создаем действие на submit:
-
-function handleSubmit(event) {
-    event.preventDefault();  //  1. Сбрасіваем к дефолту чтоби страница не перезагружалась
-    
-    if (textarea.value.trim() === "" || form.email.value.trim() === "") {
+    if (formData.email === "" || formData.message === "") {
         alert("Fill please all fields")
+
+        return;
     }
-    console.log("Відправлення форми");
-    event.target.reset();    // убираем все данние введенніе пользователем
+    console.log(formData);
 
-    localStorage.removeItem(STORAGE_KEY); // ощищаем localStorage;
-
-}
+    // очистка
+    localStorage.removeItem(STORAGE_KEY);
+    formData.email = "";
+    formData.message = "";
+    form.reset();
+})
